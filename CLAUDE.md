@@ -70,10 +70,16 @@ Two distinct carousel implementations:
 
 To sync changes to the live site, run:
 ```bash
-/Users/jamesmoulang/GitHub/cam_skate_site/sync-to-ftp.sh
+cd /Users/jamesmoulang/.openclaw/workspace/CamSkateSite && bash sync-to-ftp.sh
 ```
 
 This uses lftp to mirror the local directory to the FTP server at ftp.cam-skate.co.uk.
+
+**CRITICAL: Always use the sync script — never run lftp mirror manually without chmod handling.**
+
+The installed lftp (4.9.3) does NOT support `--chmod-dirs` or `--chmod-files` flags. The sync script handles permissions via explicit `chmod` commands after mirroring. Skipping this breaks file permissions on the live site (403 errors on subpages/images).
+
+If you must run lftp manually, always follow with explicit chmod commands for all files and directories.
 
 ## Development Notes
 
