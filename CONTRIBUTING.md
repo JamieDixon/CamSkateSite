@@ -18,7 +18,7 @@ See the [LICENSE](LICENSE) file for the full terms under which this repository i
 
 1. Fork the repo on GitHub (click "Fork" top-right).
 2. Clone your fork locally: `git clone https://github.com/YOUR_USERNAME/cam_skate_site.git`
-3. Serve it with any static file server — see the [README](readme.md#running-locally).
+3. Serve it with any static file server — see the [README](readme.md#running-locally) — or just open the files directly in your browser.
 
 ## Making a change
 
