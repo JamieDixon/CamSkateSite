@@ -59,4 +59,4 @@ General enquiries: <hello@cam-skate.co.uk>
 
 ## Licence
 
-This repository is source-available, not open source. The code is visible so that community volunteers can contribute to the Cam Skate website, but all rights are reserved by Skateboard Cambridge CIC. See the [LICENSE](LICENSE) file for details.
+CamSkateSite is [MIT licensed](https://github.com/JamesMoulang/CamSkateSite/blob/main/LICENSE).
