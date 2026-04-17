@@ -50,34 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${startTime}-${endTime}`;
   }
 
-  const COLOR_MAPPING = {
-    "beginners session": "#4CAF50", // Green
-    "beginners evening": "#4CAF50", // Green
-    "open session": "#2196F3", // Blue
-    "☕ open session": "#2196F3",
-    "after school club": "#FFC107", // Amber
-    "after work club": "#FFC107",
-    "☕ under 10s": "#FF9800", // Orange
-    "under 10s": "#FF9800",
-    "girl skate night": "#E91E63", // Pink
-    "quads & blades": "#9C27B0", // Purple
-    "quads and blades": "#9C27B0", // Purple
-    "queer skate night": "#673AB7", // Deep Purple
-    "30+ (beginners)": "#795548", // Brown
-    "30+ (all abilities)": "#795548",
-    "scooter session": "#607D8B", // Blue Grey
-    "after school scooter club": "#607D8B", // Blue Grey
-    default: "#9E9E9E", // Grey
-  };
-
   function getColorForEvent(title) {
     const lower_title = title.toLowerCase();
-    for (const keyword in COLOR_MAPPING) {
+    for (const keyword in SESSION_CONFIG) {
       if (lower_title.includes(keyword)) {
-        return COLOR_MAPPING[keyword];
+        return SESSION_CONFIG[keyword].color;
       }
     }
-    return COLOR_MAPPING["default"];
+    return SESSION_CONFIG["default"].color;
   }
 
   async function fetchAndPopulateCarousel() {

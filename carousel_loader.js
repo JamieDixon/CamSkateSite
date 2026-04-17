@@ -33,96 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Default image to use for carousel items if no specific image is found
   const DEFAULT_IMAGE = "img/advanced.jpg";
-  // Mapping of event titles (keywords) to specific images
-  // const IMAGE_MAPPING = {
-  //     'open session': 'img/advanced.jpg',
-  //     'after work club': 'img/party.jpg',
-  //     'beginner': 'img/beginners.jpg',
-  //     'coaching': 'img/coaching.jpg',
-  //     'kids': 'img/kids_and_coaching.jpg',
-  //     'women': 'img/girl_skate_night.jpg',
-  //     'lgbtq+': 'img/girl_skate_night.jpg',
-  //     '30+': 'img/pipe_and_slippers.jpg',
-  //     'quads': 'img/quads_and_blades.jpg',
-  //     'blades': 'img/quads_and_blades.jpg',
-  // };
 
-  const IMAGE_MAPPING = {
-    "beginners session": "img/beginners.jpg",
-    "beginners evening": "img/beginners.jpg",
-    "open session": [
-      "img/advanced.jpg",
-      "img/open session 1.jpg",
-      "img/open session 2.jpg",
-    ],
-    "☕ open session": "img/advanced.jpg",
-    "after school club": "img/after_school.jpeg",
-    "after work club": "img/reception group.png",
-    "☕ under 10s": "img/junior jam 2.png",
-    "under 10s": "img/junior jam 2.png",
-    "girl skate night": "img/girl_skate_night.jpg",
-    "quads & blades": ["img/q&b 1.jpeg", "img/q&b 2.jpeg", "img/q&b 3.jpeg"],
-    "quads and blades": ["img/q&b 1.jpeg", "img/q&b 2.jpeg", "img/q&b 3.jpeg"],
-    "queer skate night": "img/q&b 3.jpeg",
-    "30+ (beginners)": "img/pipe_and_slippers.jpg",
-    "30+ (all abilities)": "img/pipe_and_slippers.jpg",
-    "surf skate session": "img/surf_skate.jpg",
-    "christmas party": "img/xmas jam poster minimal.jpg",
-    "scooter session": [
-      "img/scooter 1.jpg",
-      "img/scooter 2.jpg",
-      "img/scooter 3.jpg",
-      "img/scooter 4.jpg",
-      "img/scooter 5.jpg",
-      "img/scooter 6.jpg",
-    ],
-    "scooters only": [
-      "img/scooter 1.jpg",
-      "img/scooter 2.jpg",
-      "img/scooter 3.jpg",
-      "img/scooter 4.jpg",
-      "img/scooter 5.jpg",
-      "img/scooter 6.jpg",
-    ],
-    "after school scooter club": [
-      "img/scooter 1.jpg",
-      "img/scooter 2.jpg",
-      "img/scooter 3.jpg",
-      "img/scooter 4.jpg",
-      "img/scooter 5.jpg",
-      "img/scooter 6.jpg",
-    ],
-  };
-
-  const DISCIPLINE_MAPPING = {
-    "open session": ["🛹 Skateboard", "🛼 Roller"],
-    "☕ open session": ["🛹 Skateboard", "🛼 Roller"],
-    "beginners session": ["🛹 Skateboard", "🛼 Roller"],
-    "beginners evening": ["🛹 Skateboard", "🛼 Roller"],
-    "girl skate night": ["🛹 Skateboard", "🛼 Roller"],
-    "queer skate night": ["🛹 Skateboard", "🛼 Roller"],
-    "30+ (beginners)": ["🛹 Skateboard", "🛼 Roller"],
-    "30+ (all abilities)": ["🛹 Skateboard", "🛼 Roller"],
-    "quads & blades": ["🛼 Roller"],
-    "quads and blades": ["🛼 Roller"],
-    "scooter session": ["🛴 Scooter"],
-    "scooters only": ["🛴 Scooter"],
-    "after school scooter club": ["🛴 Scooter"],
-    "after school club": ["🛹 Skateboard"],
-    "after work club": ["🛹 Skateboard"],
-    "☕ under 10s": ["all wheels welcome"],
-    "under 10s": ["all wheels welcome"],
-  };
-
-  const SAMPLE_EVENTS = Object.keys(IMAGE_MAPPING).map((key, index) =>
+  const SAMPLE_EVENTS = Object.keys(SESSION_CONFIG).map((key, index) =>
     makeSampleEvent(key, 9 + index, 10 + index),
   );
 
   function getDisciplinesForEvent(title) {
     const lower_title = title.toLowerCase();
-    for (const keyword in DISCIPLINE_MAPPING) {
+    for (const keyword in SESSION_CONFIG) {
       if (lower_title.includes(keyword)) {
-        return DISCIPLINE_MAPPING[keyword];
+        return SESSION_CONFIG[keyword].disciplines;
       }
     }
     return null;
@@ -144,54 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return html;
   }
 
-  const LINK_MAPPING = {
-    "beginners session": [
-      { href: "/sessions#beginner_sessions", text: "More info" },
-    ],
-    "beginners evening": [
-      { href: "/sessions#beginner_sessions", text: "More info" },
-    ],
-    closed: [{ href: "/sessions#beginner_sessions", text: "" }],
-    "girl skate night": [
-      { href: "/sessions#girl_skate_night", text: "More info" },
-    ],
-    "queer skate night": [
-      { href: "/sessions#queer_skate_night", text: "More info" },
-    ],
-    "30+ (beginners)": [
-      { href: "/sessions#pipe_and_slippers", text: "More info" },
-    ],
-    "30+ (all abilities)": [
-      { href: "/sessions#pipe_and_slippers", text: "More info" },
-    ],
-    "quads & blades": [
-      { href: "/sessions#quads_and_blades", text: "More info" },
-    ],
-    "quads and blades": [
-      { href: "/sessions#quads_and_blades", text: "More info" },
-    ],
-    "open session": [
-      { href: "/sessions", text: "View this week's open sessions" },
-      { href: "/visit", text: "How to visit" },
-    ],
-    "☕ open session": [
-      { href: "/sessions", text: "View all open sessions this week" },
-      { href: "/visit", text: "How to visit" },
-    ],
-    "after school club": [{ href: "/coaching", text: "Book coaching" }],
-    "after work club": [{ href: "/coaching", text: "Book coaching" }],
-    "scooters only": [{ href: "/sessions#scooter_session", text: "More info" }],
-    "after school scooter club": [
-      { href: "/coaching/scooter/", text: "More info" },
-    ],
-    default: [{ href: "/sessions", text: "More info" }],
-  };
-
   function getImageForEvent(title) {
     const lower_title = title.toLowerCase();
-    for (const keyword in IMAGE_MAPPING) {
+    for (const keyword in SESSION_CONFIG) {
       if (lower_title.includes(keyword)) {
-        const imageOrArray = IMAGE_MAPPING[keyword];
+        const imageOrArray = SESSION_CONFIG[keyword].images;
         if (Array.isArray(imageOrArray)) {
           const randomIndex = Math.floor(Math.random() * imageOrArray.length);
           return imageOrArray[randomIndex];
@@ -247,11 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function generateLinkHTML(title) {
     const lower_title = title.toLowerCase();
     let linksHTML = "";
-    let matchingLinks = LINK_MAPPING["default"]; // Start with default links
+    let matchingLinks = SESSION_CONFIG["default"].links; // Start with default links
 
-    for (const keyword in LINK_MAPPING) {
+    for (const keyword in SESSION_CONFIG) {
       if (keyword !== "default" && lower_title.includes(keyword)) {
-        matchingLinks = LINK_MAPPING[keyword];
+        matchingLinks = [].concat(SESSION_CONFIG[keyword].links);
         break;
       }
     }
