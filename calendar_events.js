@@ -18,7 +18,7 @@ const calendarEvents = (function calendarEvents() {
       .then((data) => data.items || [])
       .catch((error) => {
         console.error("Error fetching calendar events:", error);
-        return [];
+        throw error;
       });
   }
 
