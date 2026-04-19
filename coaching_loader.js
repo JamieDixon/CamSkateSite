@@ -128,6 +128,9 @@ function populateCourse(root, data) {
   applyVisibility(root, term !== null);
 
   if (term) {
+    const isOngoing = data.ongoing_term != null;
+    setField(root, "badge-text", isOngoing ? "Term started!" : "Book now");
+
     setField(root, "drop-in-price", `£${term.prices.door}`);
     setField(root, "term-price-per-session", `£${term.prices.bulk}`);
 
