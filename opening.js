@@ -8,17 +8,8 @@ var today = new Date();
 today.setDate(today.getDate() - 1);
 const timeMin = today.toISOString(); // Get only upcoming events
 
-const url = `https://www.googleapis.com/calendar/v3/calendars/${calendar_id}/events?key=${api_key}&maxResults=${maxResults}&orderBy=${orderBy}&singleEvents=true&timeMin=${encodeURIComponent(timeMin)}`;
-
-// Fetch
-
-fetch(url)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  })
+calendarEvents
+  .getCalendarEvents({ maxResults, timeMin, orderBy, timeMin })
   .then((data) => {
     console.log("Events:", data.items);
 
