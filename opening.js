@@ -10,9 +10,7 @@ const timeMin = today.toISOString(); // Get only upcoming events
 
 calendarEvents
   .getCalendarEvents({ maxResults, timeMin, orderBy, timeMin })
-  .then((data) => {
-    console.log("Events:", data.items);
-
+  .then((events) => {
     // const opening_hours = {
     //   'Mon Jan 06': [ early_evening ],
     // };
@@ -59,7 +57,7 @@ calendarEvents
 
     const today = new Date();
 
-    data.items.map((item) => {
+    events.map((item) => {
       // Use local time from the dateTime string directly (Google Calendar returns local time)
       const start_date = new Date(item.start.dateTime);
       const end_date = new Date(item.end.dateTime);
