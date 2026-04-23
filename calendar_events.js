@@ -59,6 +59,7 @@ const calendarEvents = (function calendarEvents() {
             ...agg,
             {
               summary: eventFromConfig?.title || event.summary, // Use title from config if found, otherwise fallback to calendar summary
+              visibility: event.visibility,
               start: event.start,
               end: event.end,
               ...(eventFromConfig || { title: event.summary }), // Fallback to calendar summary if no match in config
