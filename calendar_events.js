@@ -1,4 +1,4 @@
-const directAccessStratrgy = (event, sessionConfig) => {
+const directAccessStrategy = (event, sessionConfig) => {
   const foundEvent = sessionConfig[event.summary.toLowerCase()];
   return foundEvent ? { title: event.summary, ...foundEvent } : null;
 };
@@ -19,7 +19,7 @@ const alternativeTitleStrategy = (event, sessionConfig) => {
 };
 
 const applyStrategies = (event, sessionConfig) => {
-  const strategies = [directAccessStratrgy, alternativeTitleStrategy];
+  const strategies = [directAccessStrategy, alternativeTitleStrategy];
   for (const strategy of strategies) {
     const result = strategy(event, sessionConfig);
     if (result) {
