@@ -1,6 +1,6 @@
 const directAccessStrategy = (event, sessionConfig) => {
   const foundEvent = sessionConfig[event.summary.toLowerCase()];
-  return foundEvent ? { title: event.summary, ...foundEvent } : null;
+  return foundEvent ? foundEvent : null;
 };
 
 // This strategy allows us to define alternative titles for events in the SESSION_CONFIG.
@@ -15,7 +15,7 @@ const alternativeTitleStrategy = (event, sessionConfig) => {
       ),
   );
 
-  return result ? { title: result[0], ...result[1] } : null;
+  return result ? result[1] : null;
 };
 
 const applyStrategies = (event, sessionConfig) => {
