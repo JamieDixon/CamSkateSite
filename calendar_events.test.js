@@ -2,6 +2,7 @@ import { expect, describe, it } from "@jest/globals";
 import {
   directAccessStrategy,
   alternativeTitleStrategy,
+  mergeAdjacentEvent,
 } from "./calendar_events";
 
 describe("Direct Access Strategy", () => {
@@ -89,5 +90,50 @@ describe("Alternative Title Strategy", () => {
     const event = { summary: "Quads and Blades" };
     const result = alternativeTitleStrategy(event, {});
     expect(result).toBeNull();
+  });
+});
+
+describe("Merge Adjacent Events", () => {
+  const makeEvent = (title, start, end) => ({
+    title,
+    summary: title,
+    start: { dateTime: start },
+    end: { dateTime: end },
+  });
+  const mergeEvents = (events) => events.reduce(mergeAdjacentEvent, []);
+
+  it("merges consecutive events with the same title", () => {
+    const firstEvent = makeEvent(
+      "Open Skate",
+      "2026-09-07T10:00:00Z",
+      "2026-09-07T12:00:00Z",
+    );
+    const secondEvent = makeEvent(
+      "Open Skate",
+      "2026-09-07T12:00:00Z",
+      "2026-09-07T14:00:00Z",
+    );
+
+    expect(mergeEvents([firstEvent, secondEvent])).toEqual([
+      makeEvent("Open Skate", "2026-09-07T10:00:00Z", "2026-09-07T14:00:00Z"),
+    ]);
+  });
+
+  it("keeps same-title events separate when there is a gap", () => {
+    const events = [
+      makeEvent("Open Skate", "2026-09-07T10:00:00Z", "2026-09-07T12:00:00Z"),
+      makeEvent("Open Skate", "2026-09-07T12:15:00Z", "2026-09-07T14:00:00Z"),
+    ];
+
+    expect(mergeEvents(events)).toEqual(events);
+  });
+
+  it("keeps adjacent events separate when their titles differ", () => {
+    const events = [
+      makeEvent("Open Skate", "2026-09-07T10:00:00Z", "2026-09-07T12:00:00Z"),
+      makeEvent("Coaching", "2026-09-07T12:00:00Z", "2026-09-07T14:00:00Z"),
+    ];
+
+    expect(mergeEvents(events)).toEqual(events);
   });
 });
