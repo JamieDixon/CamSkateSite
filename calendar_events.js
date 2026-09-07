@@ -29,6 +29,24 @@ const applyStrategies = (event, sessionConfig) => {
   return null;
 };
 
+const getEventTime = (eventTime) => eventTime.dateTime || eventTime.date;
+
+const mergeAdjacentEvent = (mergedEvents, event) => {
+  const previousEvent = mergedEvents.at(-1);
+
+  if (
+    previousEvent &&
+    previousEvent.title === event.title &&
+    getEventTime(previousEvent.end) === getEventTime(event.start)
+  ) {
+    previousEvent.end = event.end;
+  } else {
+    mergedEvents.push(event);
+  }
+
+  return mergedEvents;
+};
+
 const calendarEvents = (function calendarEvents() {
   const CALENDAR_ID =
     "648a32abb0a80624c5f98e8e4bfd057578a6aed5110ba2addc6f9496fa9cabb4@group.calendar.google.com";
@@ -53,21 +71,19 @@ const calendarEvents = (function calendarEvents() {
       .then((data) => data.items || [])
       .then((events) => {
         const defaultConfig = sessionConfig["default"] || {};
-        return events.reduce((agg, event) => {
+        return events.reduce((mergedEvents, event) => {
           const eventFromConfig = applyStrategies(event, sessionConfig);
+          const normalisedEvent = {
+            ...defaultConfig,
+            ...(eventFromConfig || {}),
+            summary: eventFromConfig?.title || event.summary,
+            title: eventFromConfig?.title || event.summary,
+            visibility: event.visibility,
+            start: event.start,
+            end: event.end,
+          };
 
-          return [
-            ...agg,
-            {
-              ...defaultConfig,
-              ...(eventFromConfig || {}),
-              summary: eventFromConfig?.title || event.summary,
-              title: eventFromConfig?.title || event.summary,
-              visibility: event.visibility,
-              start: event.start,
-              end: event.end,
-            },
-          ];
+          return mergeAdjacentEvent(mergedEvents, normalisedEvent);
         }, []);
       })
       .catch((error) => {
@@ -85,5 +101,6 @@ if (typeof exports === "object") {
     applyStrategies,
     directAccessStrategy,
     alternativeTitleStrategy,
+    mergeAdjacentEvent,
   };
 }
