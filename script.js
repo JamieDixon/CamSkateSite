@@ -228,6 +228,16 @@ const SESSION_CONFIG = {
     disciplines: [],
     images: ["img/surf_skate.jpg"],
   },
+  "birthday bash!": {
+    title: "Birthday Bash x Plaza Fundraiser",
+    links: [{ href: "/events", text: "More info" }],
+    color: "#FF5722",
+    disciplines: [],
+    images: ["img/birthday_bash_2026_lineup.jpg"],
+    altTitles: ["birthday bash"],
+    // Pinned events jump to the front of the carousel until this date passes
+    pinnedUntil: "2026-09-12T20:00:00+01:00",
+  },
   "christmas party": {
     title: "Christmas party",
     links: [],

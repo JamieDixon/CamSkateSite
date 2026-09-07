@@ -496,12 +496,13 @@
             at reception in the park.
           </p>
           <p>
-            We also have a
-            <a href="https://membership.cam-skate.co.uk/supporter"
-              >Supporter membership</a
-            >
-            which offers unlimited entry to regular sessions until July 2026.
-            The price is currently <b id="supporter_price"></b>.
+            We also have a Supporter membership which offers unlimited entry to
+            regular sessions until 31st July 2027. The price is
+            <b>£250</b> and it's currently available exclusively as a reward on
+            our
+            <a href="https://www.crowdfunder.co.uk/p/dc-skatepark"
+              >Renovate Donkey Common Skatepark crowdfunder</a
+            >.
           </p>
           <p>
             After School and After Work Club (coached sessions) cost £20 per
@@ -547,22 +548,6 @@
         </div>
       </div>
     </footer>
-    <script>
-      const today = new Date();
-      const target = new Date(2026, 6, 1); // Months are 0-indexed (6 = July)
-
-      const yearsDiff = target.getFullYear() - today.getFullYear();
-      const monthsDiff = target.getMonth() - today.getMonth();
-
-      let months = yearsDiff * 12 + monthsDiff;
-      if (months < 1) months = 1; // Matches Ruby's minimum-cost logic
-
-      let price = months * 25;
-      if (price < 25) price = 25;
-
-      const element = document.getElementById("supporter_price");
-      element.innerText = `£${price}`;
-    </script>
     <script src="../script.js"></script>
     <script src="../calendar_events.js"></script>
     <script>

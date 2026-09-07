@@ -53,6 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return html;
   }
 
+  // An event is pinned (shown at the front of the carousel) while its
+  // config's `pinnedUntil` date is still in the future
+  function isPinned(event) {
+    return Boolean(
+      event.pinnedUntil && new Date() < new Date(event.pinnedUntil),
+    );
+  }
+
   function getImageForEvent(event) {
     const images = event.images?.length ? event.images : [DEFAULT_IMAGE];
     const randomIndex = Math.floor(Math.random() * images.length);
@@ -186,6 +194,20 @@ document.addEventListener("DOMContentLoaded", () => {
       eventsToDisplay = Object.values(nextUpcomingEvents);
     } else {
       eventsToDisplay = events;
+    }
+
+    // Move pinned events to the front of the list
+    if (GROUP_ALL_INSTANCES) {
+      const entries = Object.entries(eventsToDisplay);
+      eventsToDisplay = Object.fromEntries([
+        ...entries.filter(([, group]) => isPinned(group[0])),
+        ...entries.filter(([, group]) => !isPinned(group[0])),
+      ]);
+    } else {
+      eventsToDisplay = [
+        ...eventsToDisplay.filter(isPinned),
+        ...eventsToDisplay.filter((event) => !isPinned(event)),
+      ];
     }
 
     let carouselHTML = "";
